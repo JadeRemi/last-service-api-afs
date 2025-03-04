@@ -10,9 +10,9 @@ async function createNew(data) {
 
   const query = `
     INSERT INTO companies (
-      contact_id, name, short_name, business_entity, contract, type, status, photos, created_at, updated_at
+      contact_id, name, short_name, business_entity, address, contract, type, status, photos, created_at, updated_at
     )
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
     RETURNING *;
   `;
 
@@ -21,6 +21,7 @@ async function createNew(data) {
     newEntity.name,
     newEntity.shortName,
     newEntity.businessEntity,
+    newEntity.address,
     JSON.stringify(newEntity.contract),
     newEntity.type,
     newEntity.status,

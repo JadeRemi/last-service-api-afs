@@ -13,6 +13,10 @@ const getOne = [
   validate,
 ];
 
+const getMany = [
+  validate,
+];
+
 const editOne = [
   check("id").isNumeric().withMessage({
     code: UnprocessableEntity,
@@ -22,6 +26,14 @@ const editOne = [
 ];
 
 const createNew = [
+  check("id").isNumeric().withMessage({
+    code: UnprocessableEntity,
+    message: "id: parameter has incorrect format",
+  }),
+  validate,
+];
+
+const deleteOne = [
   check("id").isNumeric().withMessage({
     code: UnprocessableEntity,
     message: "id: parameter has incorrect format",
@@ -77,4 +89,4 @@ const removeImage = [
   validate,
 ];
 
-module.exports = { getOne, editOne, addImage, removeImage, createNew };
+module.exports = { getOne, editOne, addImage, removeImage, createNew, getMany, deleteOne };

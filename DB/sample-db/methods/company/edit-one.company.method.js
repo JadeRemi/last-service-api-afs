@@ -1,5 +1,5 @@
 const { getOne } = require("./get-one.company.method");
-const { executeQuery } = require('../../../../services/utils/execute-query'); // assuming you have this utility
+const { executeQuery } = require('../../../../services/utils/execute-query');
 
 /**
  * Редактирует данные компании с указанным идентификатором
@@ -27,8 +27,9 @@ async function editOne(id, data) {
       type = $5,
       status = $6,
       photos = $7,
-      updated_at = $8
-    WHERE id = $9
+      updated_at = $8,
+      address = $9
+    WHERE id = $10
     RETURNING *;
   `;
 
@@ -41,6 +42,7 @@ async function editOne(id, data) {
     updated.status,
     JSON.stringify(updated.photos),
     updated.updatedAt,
+    updated.address,
     id,
   ];
 

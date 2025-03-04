@@ -1,4 +1,4 @@
-const { executeQuery } = require('../../../../services/utils/execute-query'); // assuming you have this utility
+const { executeQuery } = require('../../../../services/utils/execute-query'); 
 
 /**
  * Создает новый контакт и возвращает результат.

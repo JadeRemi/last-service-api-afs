@@ -1,5 +1,5 @@
 const { getOne } = require("./get-one.contact.method");
-const { executeQuery } = require('../../../../services/utils/execute-query'); // assuming you have this utility
+const { executeQuery } = require('../../../../services/utils/execute-query'); 
 
 /**
  * Редактирует данные контакта с указанным идентификатором
