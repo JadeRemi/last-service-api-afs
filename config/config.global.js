@@ -3,7 +3,7 @@ const path = require("path");
 
 // APP SETTINGS
 config.port = 2114;
-config.prefix = "v1";
+config.prefix = "v2";
 config.url = "http://localhost:2114";
 
 // ENV
@@ -15,7 +15,7 @@ config.env.test = process.env.NODE_ENV === "test";
 // DB SETTINGS
 config.dbs = {};
 config.dbs.sample_db = {};
-config.dbs.sample_db.uri = "mongodb://user:password@db_host";
+config.dbs.sample_db.uri = "postgres://jessienorah:password@localhost:5432/db_name";
 config.dbs.sample_db.database = "db_name";
 config.dbs.sample_db.id = "sample_db";
 

@@ -1,21 +1,24 @@
+const { executeQuery } = require('../../../../services/utils/execute-query');
+const { formatContactData } = require('../../../../services/utils/format-contact');
+
 /**
  * Возвращает данные контакта с указанным идентификатором.
  * @param {string} id
  * @return {Object|null}
  */
-function getOne(id) {
-  const mock = {
-    id: 16,
-    lastname: "Григорьев",
-    firstname: "Сергей",
-    patronymic: "Петрович",
-    phone: "79162165588",
-    email: "grigoriev@funeral.com",
-    createdAt: "2020-11-21T08:03:26.589Z",
-    updatedAt: "2020-11-23T09:30:00Z",
-  };
+async function getOne(id) {
+  if (!id) {
+    throw new Error('Contact ID is required');
+  }
 
-  return parseInt(id, 10) === mock.id ? mock : null;
+  const query = 'SELECT * FROM contacts WHERE id = $1';
+  const rows = await executeQuery(query, [id]);
+
+  if (!rows || rows.length === 0) {
+    return null;
+  }
+
+  return formatContactData(rows[0]);
 }
 
 module.exports = { getOne };

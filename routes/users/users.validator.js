@@ -3,18 +3,32 @@ const { UnprocessableEntity } = require("../../constants/errors");
 const validate = require("../../middleware/validation.middleware");
 
 const getAuth = [
-  check("user")
+  check("login")
     .notEmpty()
     .withMessage({
       code: UnprocessableEntity,
-      message: "user: parameter is required",
+      message: "login: parameter is required",
     })
     .bail()
-    .custom((value) => value.id)
+    .isLength({ min: 2 })
     .withMessage({
       code: UnprocessableEntity,
-      message: "user.id: parameter is required",
+      message: "login: must be at least 2 characters long",
     }),
+
+  check("password")
+    .notEmpty()
+    .withMessage({
+      code: UnprocessableEntity,
+      message: "password: parameter is required",
+    })
+    .bail()
+    .isLength({ min: 2 })
+    .withMessage({
+      code: UnprocessableEntity,
+      message: "password: must be at least 2 characters long",
+    }),
+
   validate,
 ];
 

@@ -1,3 +1,4 @@
+const { Pool } = require("pg");
 const dbsConfig = require("../config").dbs;
 const logger = require("./logger.service")(module);
 
@@ -13,6 +14,8 @@ class Database {
 
   #connection;
 
+  #pool;
+
   constructor(config) {
     this.#uri = config.uri;
     this.#id = config.id;
@@ -25,7 +28,11 @@ class Database {
    */
   async connect() {
     try {
-      // todo: метод установки соединения с БД
+      this.#pool = new Pool({
+        connectionString: this.#uri,
+      });
+
+      this.#connection = await this.#pool.connect();
       logger.info(`Connected to ${this.#id}`);
     } catch (error) {
       logger.error(`Unable to connect to ${this.#id}:`, error.message);
@@ -39,7 +46,8 @@ class Database {
   async disconnect() {
     if (this.#connection) {
       try {
-        // todo: метод закрытия соединения с БД
+        await this.#connection.release();
+        await this.#pool.end();
         logger.info(`Disconnected from ${this.#id}`);
       } catch (error) {
         logger.error(`Unable to disconnect from ${this.#id}:`, error.message);
@@ -53,6 +61,22 @@ class Database {
    */
   get connection() {
     return this.#connection;
+  }
+
+   /**
+   * Выполняет SQL-запрос с указанными параметрами.
+   * @param {string} query - SQL-запрос.
+   * @param {Array} params - Параметры запроса.
+   * @return {Promise<Object>} - Результат выполнения запроса.
+   */
+   async query(query, params) {
+    try {
+      const result = await this.#pool.query(query, params);
+      return result;
+    } catch (error) {
+      logger.error(`Query execution error: ${error.message}`);
+      throw error;
+    }
   }
 }
 

@@ -3,4 +3,5 @@ module.exports = {
   ...require("./edit-one.companies.action"),
   ...require("./add-image.companies.action"),
   ...require("./remove-image.companies.action"),
+  ...require("./create-new.companies.action"),
 };

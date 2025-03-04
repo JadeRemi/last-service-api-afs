@@ -21,6 +21,14 @@ const editOne = [
   validate,
 ];
 
+const createNew = [
+  check("id").isNumeric().withMessage({
+    code: UnprocessableEntity,
+    message: "id: parameter has incorrect format",
+  }),
+  validate,
+];
+
 const addImage = [
   check("id").isNumeric().withMessage({
     code: UnprocessableEntity,
@@ -69,4 +77,4 @@ const removeImage = [
   validate,
 ];
 
-module.exports = { getOne, editOne, addImage, removeImage };
+module.exports = { getOne, editOne, addImage, removeImage, createNew };

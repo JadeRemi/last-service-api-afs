@@ -1,4 +1,5 @@
 const { getOne } = require("./get-one.company.method");
+const { executeQuery } = require('../../../../services/utils/execute-query'); // assuming you have this utility
 
 /**
  * Редактирует данные компании с указанным идентификатором
@@ -7,16 +8,45 @@ const { getOne } = require("./get-one.company.method");
  * @param {Object} data
  * @return {Object}
  */
-function editOne(id, data) {
-  const mock = getOne(id);
+async function editOne(id, data) {
+  const foundEntity = await getOne(id);
+  
+  if (!foundEntity) {
+    throw new Error('Company not found');
+  }
 
-  const updated = { ...mock };
-  Object.keys(data).forEach((key) => {
-    updated[`${key}`] = data[`${key}`];
-  });
-  updated.updatedAt = new Date();
+  const updated = { ...foundEntity, ...data, updatedAt: new Date().toISOString() };
 
-  return updated;
+  const query = `
+    UPDATE companies
+    SET
+      name = $1,
+      short_name = $2,
+      business_entity = $3,
+      contract = $4,
+      type = $5,
+      status = $6,
+      photos = $7,
+      updated_at = $8
+    WHERE id = $9
+    RETURNING *;
+  `;
+
+  const values = [
+    updated.name,
+    updated.shortName,
+    updated.businessEntity,
+    JSON.stringify(updated.contract),
+    updated.type,
+    updated.status,
+    JSON.stringify(updated.photos),
+    updated.updatedAt,
+    id,
+  ];
+
+  const result = await executeQuery(query, values);
+
+  return result[0];
 }
 
 module.exports = { editOne };

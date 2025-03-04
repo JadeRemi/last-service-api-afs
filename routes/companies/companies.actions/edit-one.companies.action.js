@@ -17,12 +17,7 @@ async function editOne(req, res) {
   const { id } = req.params;
   const data = req.body;
 
-  const company = companyMethods.getOne(id);
-  if (!company) {
-    throw new NotFound("Company not found");
-  }
-
-  const updated = companyMethods.editOne(id, data);
+  const updated = await companyMethods.editOne(id, data);
 
   const photoUrl = getUrlForRequest(req);
   res.status(OK).json(parseOne(updated, photoUrl));

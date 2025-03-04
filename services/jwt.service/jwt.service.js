@@ -21,6 +21,7 @@ class JwtService {
    * @return {EncodedAndSignedToken}
    */
   encode(user) {
+    console.error("3", user)
     logger.info(`Encode API JWT token for user: ${user.id}`);
     const token = new EncodedAndSignedToken(this.#config, {
       pld: user,

@@ -34,3 +34,11 @@ npm run start-dev
 * страница с этим описанием - http://localhost:2114/v1
 * страница с документацией - http://localhost:2114/v1/docs
 
+===
+
+Payload example
+
+```
+localhost:2114/v2/users/auth?user[id]=1
+```
+

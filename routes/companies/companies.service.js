@@ -7,7 +7,7 @@
 function parseOne(item, photoUrl) {
   return {
     ...item,
-    photos: item.photos.map((photo) => ({
+    photos: item.photos?.map((photo) => ({
       ...photo,
       name: `${photoUrl}static/${photo.name}`,
       thumbpath: `${photoUrl}static/${photo.thumbpath}`,

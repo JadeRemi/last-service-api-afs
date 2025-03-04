@@ -15,12 +15,8 @@ async function editOne(req, res) {
   const { id } = req.params;
   const data = req.body;
 
-  const contact = contactMethods.getOne(id);
-  if (!contact) {
-    throw new NotFound("Contact not found");
-  }
 
-  const updated = contactMethods.editOne(id, data);
+  const updated = await contactMethods.editOne(id, data);
 
   res.status(OK).json(updated);
   logger.success();
